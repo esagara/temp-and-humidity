@@ -2,7 +2,7 @@ from datetime import datetime
 import csv
 import Adafruit_DHT
 
-data_file = "./data/readings.csv"
+data_file = "/home/pi/code/temp-and-humidity/data/readings.csv"
 
 sensor = Adafruit_DHT.DHT22
 pin = 4
