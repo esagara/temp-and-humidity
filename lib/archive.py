@@ -44,10 +44,3 @@ def archive_and_create():
     with open(SETTINGS['data_file'], 'wb') as output:
         output.write(fieldnames)
         output.writelines(data[-6:])
-
-
-
-
-if check_file():
-    #Open the data file and create an archive
-    archive_and_create()
