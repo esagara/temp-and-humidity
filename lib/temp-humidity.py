@@ -1,4 +1,5 @@
 from datetime import datetime
+import csv
 import Adafruit_DHT
 
 data_file = "./data/readings.csv"
@@ -18,6 +19,6 @@ temperature = convert_temp(temperature)
 
 # print "The temperature is {0} degrees Farenheit and the humidity is {1} percent at {2}.".format(temperature, humidity, time)
 
-with open(data_file,'ab') as output:
-    record = ",".join([now, temperature, humidity])
-    output.write(record)
+with open(data_file,'ab') as out_file:
+    output = csv.writer(outfile)
+    output.writerow([now, temperature, humidity])
