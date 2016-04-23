@@ -1,7 +1,6 @@
 import os
 from datetime import datetime
 import csv
-import boto
 from local_settings import SETTINGS
 
 NOW = datetime.now()
