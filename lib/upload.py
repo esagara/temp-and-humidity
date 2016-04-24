@@ -41,6 +41,7 @@ def upload_to_s3(upload_file, directory, callback=None, md5=None, reduced_redund
     k = Key(bucket)
     k.key = key
 
+
     if content_type:
         k.set_metadata('Content-Type', content_type)
 
@@ -51,7 +52,7 @@ def upload_to_s3(upload_file, directory, callback=None, md5=None, reduced_redund
         reduced_redundancy=reduced_redundancy,
         rewind=True
     )
-
+    k.set_acl('public-read')
     # Rewind for later use
     file.seek(0)
 

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src='node_modules/jquery/dist/jquery.min.js'></script>
+    <script src='node_modules/underscore/underscore-min.js'></script>
+    <script src='node_modules/d3/d3.min.js'></script>
+    <script type="text/template" id="readingTemplate">
+      <div id='date'><%= _.template.formatdate(date) %></div>
+      <div id='temp-humidity'>
+        <div id='temp'>
+          <div class='header'>Temperature</div>
+          <div class='reading'><%= temperature %> F</div>
+        </div>
+        <div id='humidity'>
+          <div class='header'>Humidity</div>
+          <div class='reading'><%= humidity %>%</div>
+        </div>
+      </div>
+      <div id='time'><%= _.template.formattime(date) %></div>
+    </script>
+    <script src='js/main.js'></script>
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+  </head>
+  <body>
+    <div id='container'>
+      <div id='reading'>
+
+      </div>
+      <div id='temp-graph'></div>
+      <div id='humidity-graph'></div>
+    </div>
+  </body>
+
+</html>
