@@ -1,6 +1,47 @@
+/*https://color.adobe.com/create/color-wheel/?copy=true&base=2&rule=Triad&selected=3&name=Copy%20of%20Theme%203&mode=rgb&rgbvalues=0.31960784313725493,0.033983618763961256,0.21409061375095875,0.669607843137255,0.5854879511220494,0.07119880863737894,0.6196078431372549,0.00392156862745098,0.39215686274509803,0.0446165301563663,0.39932671725909186,0.4196078431372549,0.051800694961528886,0.8726731398498255,0.919607843137255&swatchOrder=0,1,2,3,4*/
+
+body {
+  font-family: sans-serif;
+  font-weight: bold;
+}
+
 #container {
   max-width: 720px;
   margin-left: auto;
   margin-right: auto;
   display: block;
+}
+
+#reading {
+  width: 100%;
+  display: block;
+}
+
+#date, #time {
+  width: 100%;
+  display: block;
+  color: white;
+  font-size: 50px;
+  text-align: center;
+  background-color: #0B666B;
+  height: 60px;
+}
+
+.reading-container {
+  display: inline-block;
+  text-align: center;
+  width: 49%;
+  height: 200px;
+  margin-top: 40px;
+}
+
+.header {
+    text-transform: uppercase;
+    font-size: 40px;
+    color: gray;
+}
+
+.reading {
+  font-size: 100px;
+  color: #9e0164;
 }

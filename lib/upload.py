@@ -82,10 +82,7 @@ def copy_data():
 
 def upload_data():
     '''Uploads only the data.'''
-    directory = os.path.join(
-        SETTINGS['site_dir'].replace(SETTINGS['project_root']+'/',''),
-        'data'
-    )
+    directory = 'data/'
     filename = os.path.join(SETTINGS['site_dir'],'data/readings.csv')
     upload_to_s3(filename, directory)
 
@@ -93,16 +90,23 @@ def upload_site():
     '''Uploads the site to S3'''
     sourceDir = SETTINGS['site_dir']
 
-    for (sourceDir, dirname, filenames) in os.walk(sourceDir):
-        directory = sourceDir.replace(SETTINGS['project_root']+'/','')
+    for (baseDir, dirname, filenames) in os.walk(sourceDir):
+        if "site/" not in baseDir:
+            baseDir = ""
+        elif "node_modules" in baseDir:
+            continue
+        else:
+            baseDir = baseDir.replace(sourceDir + "/","")
+
         for filename in filenames:
+            if filename == "readings.csv":
+                continue
             filepath = os.path.join(sourceDir,filename)
-            upload_to_s3(filepath, directory)
+            upload_to_s3(filepath, baseDir)
 
 def upload_files(data_only = True):
     upload_archive()
     copy_data()
-    if data_only:
-        upload_data()
-    else:
+    upload_data()
+    if not data_only:
         upload_site()

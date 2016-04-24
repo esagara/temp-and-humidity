@@ -7,11 +7,11 @@
     <script type="text/template" id="readingTemplate">
       <div id='date'><%= _.template.formatdate(date) %></div>
       <div id='temp-humidity'>
-        <div id='temp'>
-          <div class='header'>Temperature</div>
+        <div id='temp' class='reading-container'>
+          <div class='header'>Temp</div>
           <div class='reading'><%= temperature %> F</div>
         </div>
-        <div id='humidity'>
+        <div id='humidity' class='reading-container'>
           <div class='header'>Humidity</div>
           <div class='reading'><%= humidity %>%</div>
         </div>
