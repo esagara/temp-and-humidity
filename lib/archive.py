@@ -39,12 +39,9 @@ def archive_and_create():
     Archives the existing file first to avoid data loss.'''
 
     data = get_data()
-    fieldnames = ""
-    template = SETTINGS['data_file'].replace('csv','template')
-    with open(template, 'rb') as infile:
-        fieldnames = infile.read()
-    archive_file(data[:-6])
+    archive_file(data)
     os.remove(SETTINGS['data-file'])
+    template = SETTINGS['data_file'].replace('csv', 'template')
     with open(SETTINGS['data_file'], 'wb') as output:
-        output.write(fieldnames)
-        output.writelines(data[-6:])
+        with open(template, 'rb') as fieldnames:
+            output.write(fieldnames)
