@@ -85,6 +85,10 @@ body {
     text-align: center;
 }
 
+.chart-head {
+  margin-top: 20px;
+}
+
 .header {
   width: 49%;
 }
