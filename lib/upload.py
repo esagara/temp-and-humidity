@@ -101,7 +101,8 @@ def upload_site():
         for filename in filenames:
             if filename == "readings.csv":
                 continue
-            filepath = os.path.join(sourceDir,filename)
+            filepath = os.path.join(sourceDir, baseDir, filename)
+            # print baseDir, filepath
             upload_to_s3(filepath, baseDir)
 
 def upload_files(data_only = True):
