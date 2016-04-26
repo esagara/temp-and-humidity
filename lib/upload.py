@@ -83,7 +83,7 @@ def copy_data():
 def upload_data():
     '''Uploads only the data.'''
     directory = 'data/'
-    filename = os.path.join(SETTINGS['site_dir'],'data/readings.csv')
+    filename = SETTINGS['data_file']
     upload_to_s3(filename, directory)
 
 def upload_site():

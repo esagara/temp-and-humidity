@@ -1,5 +1,5 @@
 from get_reading import get_reading
-from upload import upload_files
+from upload import upload_data
 
 
 
