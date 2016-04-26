@@ -1,9 +1,9 @@
 "use strict";
 var formatDate = d3.time.format("%Y-%m-%d %I:%M %p");
 
-var dateString = d3.time.format("%A, %b. %d");
+var dateString = d3.time.format("%A, %b. %-d");
 
-var timeString = d3.time.format("%I:%M %p");
+var timeString = d3.time.format("%-I:%M %p");
 
 var transformData = function(d) {
     d.date = formatDate.parse(d.date);
@@ -28,7 +28,8 @@ var drawTemp = function(data) {
 
   var xAxis = d3.svg.axis()
       .scale(x)
-      .orient("bottom");
+      .orient("bottom")
+      .tickFormat(d3.time.format("%-I%p"));
 
   var yAxis = d3.svg.axis()
       .scale(y)
@@ -46,7 +47,7 @@ var drawTemp = function(data) {
 
 
     x.domain(d3.extent(data, function(d) { return d.date; }));
-    y.domain(d3.extent(data, function(d) { return d.temperature; }));
+    y.domain([0, d3.max(data, function(d) { return d.temperature; })]);
 
     svg.append("g")
         .attr("class", "x axis")
@@ -86,7 +87,8 @@ var drawHumidity = function(data) {
 
   var xAxis = d3.svg.axis()
       .scale(x)
-      .orient("bottom");
+      .orient("bottom")
+      .tickFormat(d3.time.format("%-I%p"));
 
   var yAxis = d3.svg.axis()
       .scale(y)
@@ -104,7 +106,7 @@ var drawHumidity = function(data) {
 
 
     x.domain(d3.extent(data, function(d) { return d.date; }));
-    y.domain(d3.extent(data, function(d) { return d.humidity; }));
+    y.domain([0, d3.max(data, function(d) { return d.humidity; })]);
 
     svg.append("g")
         .attr("class", "x axis")
@@ -154,6 +156,7 @@ $(function(){
     // console.log(data[data.length]);
     var lastReading = readingTemp(data[data.length - 1]);
     $("#reading").html(lastReading);
+
     drawTemp(data);
     drawHumidity(data);
   });
