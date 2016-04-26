@@ -27,18 +27,62 @@ body {
   height: 60px;
 }
 
+.footer {
+
+}
+
+.location {
+  padding-bottom: 10px;
+  text-align: center;
+  color: #9e0164;
+}
+
+#wunderground {
+  border-top: 1px solid grey;
+  color: #AB9512;
+}
+
+#wunderground-logo img {
+  width: 90px;
+  display: inline-block;
+}
+
+#wunderground-logo .location {
+  display: inline-block;
+  margin-left: 230px;
+  padding-bottom: 10px;
+  text-align: left;
+}
+
+#wunderground .reading {
+  color: #AB9512;
+}
+
+#wunderground .location {
+  color: #AB9512;
+}
+
 .reading-container {
   display: inline-block;
   text-align: center;
   width: 49%;
-  height: 200px;
-  margin-top: 40px;
+  height: 140px;
+  padding-top: 32px;
+}
+
+#header-row {
+  display: block;
+  width: 100%;
+  margin-top: 30px;
 }
 
 .header {
     text-transform: uppercase;
     font-size: 40px;
     color: gray;
+    width: 49%;
+    display: inline-block;
+    text-align: center;
 }
 
 .reading {

@@ -6,15 +6,27 @@
     <script src='js/d3.min.js'></script>
     <script type="text/template" id="readingTemplate">
       <div id='date'><%= _.template.formatdate(date) %></div>
-      <div id='temp-humidity'>
+      <div id='header-row'>
+        <div class='header'>Temp</div>
+        <div class='header'>Humidity</div>
+      </div>
+      <div class='temp-humidity' id='local'>
         <div id='temp' class='reading-container'>
-          <div class='header'>Temp</div>
           <div class='reading'><%= _.template.formatreading(temperature) %> F</div>
         </div>
         <div id='humidity' class='reading-container'>
-          <div class='header'>Humidity</div>
           <div class='reading'><%= _.template.formatreading(humidity) %>%</div>
         </div>
+        <div class='location'>Nikkibana</div>
+      </div>
+      <div class='temp-humidity' id='wunderground'>
+        <div id='temp' class='reading-container'>
+          <div class='reading'><%= _.template.formatreading(temperature) %> F</div>
+        </div>
+        <div id='humidity' class='reading-container'>
+          <div class='reading'><%= _.template.formatreading(humidity) %>%</div>
+        </div>
+        <div id='wunderground-logo'><img src='https://icons.wxug.com/logos/PNG/wundergroundLogo_4c_horz.png'/><div class='location'>Vallejo, CA</div></div>
       </div>
       <div id='time'><%= _.template.formattime(date) %></div>
     </script>
@@ -23,9 +35,7 @@
   </head>
   <body>
     <div id='container'>
-      <div id='reading'>
-
-      </div>
+      <div id='reading'></div>
       <div id='temperature' class='chart'></div>
       <div id='humidity' class='chart'></div>
     </div>
