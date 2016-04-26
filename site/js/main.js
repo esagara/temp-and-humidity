@@ -9,6 +9,8 @@ var transformData = function(d) {
     d.date = formatDate.parse(d.date);
     d.temperature = +d.temperature;
     d.humidity = +d.humidity;
+    d.city_temperature = +d.city_temperature;
+    d.city_humidity = +d.city_humidity;
     return d;
 };
 
@@ -26,15 +28,20 @@ var drawChart = function(data, chartType) {
   var xAxis = d3.svg.axis()
       .scale(x)
       .orient("bottom")
-      .tickFormat(d3.time.format("%-I%p"));
+      .ticks(5)
+      .tickFormat(d3.time.format("%-I:%M %p"));
 
   var yAxis = d3.svg.axis()
       .scale(y)
       .orient("left");
 
-  var line = d3.svg.line()
+  var localLine = d3.svg.line()
       .x(function(d) { return x(d.date); })
       .y(function(d) { return y(d[chartType]); });
+
+  var wundergroundLine = d3.svg.line()
+      .x(function(d) { return x(d.date); })
+      .y(function(d) { return y(d['city_'+chartType]); });
 
   var svg = d3.select(".chart#" + chartType).append("svg")
       .attr("width", width + margin.left + margin.right)
@@ -43,7 +50,20 @@ var drawChart = function(data, chartType) {
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
   x.domain(d3.extent(data, function(d) { return d.date; }));
-  y.domain([0, d3.max(data, function(d) { return d[chartType]; })]);
+  y.domain([
+    d3.min(data, function(d){
+      return d3.min([
+        d[chartType],
+        d['city_'+chartType]
+      ]) - 10;
+    }),
+    d3.max(data, function(d) {
+      return d3.max([
+        d[chartType],
+        d['city_'+chartType]
+      ]) + 10;
+    })
+  ]);
 
   svg.append("g")
       .attr("class", "x axis")
@@ -56,9 +76,13 @@ var drawChart = function(data, chartType) {
 
   svg.append("path")
       .datum(data)
-      .attr("class", "line")
-      .attr("d", line);
+      .attr("class", "line local")
+      .attr("d", localLine);
 
+  svg.append("path")
+      .datum(data)
+      .attr("class", "line wunderground")
+      .attr("d", wundergroundLine);
 };
 
 

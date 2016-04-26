@@ -76,13 +76,17 @@ body {
   margin-top: 30px;
 }
 
-.header {
+.header, .chart-head {
     text-transform: uppercase;
     font-size: 40px;
     color: gray;
-    width: 49%;
+    width: 100%;
     display: inline-block;
     text-align: center;
+}
+
+.header {
+  width: 49%;
 }
 
 .reading {
@@ -106,4 +110,10 @@ body {
   fill: none;
   stroke: steelblue;
   stroke-width: 1.5px;
+}
+.line.local {
+  stroke: #9e0164;
+}
+.line.wunderground {
+  stroke: #AB9512;
 }
