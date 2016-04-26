@@ -9,11 +9,11 @@
       <div id='temp-humidity'>
         <div id='temp' class='reading-container'>
           <div class='header'>Temp</div>
-          <div class='reading'><%= temperature %> F</div>
+          <div class='reading'><%= _.template.formatreading(temperature) %> F</div>
         </div>
         <div id='humidity' class='reading-container'>
           <div class='header'>Humidity</div>
-          <div class='reading'><%= humidity %>%</div>
+          <div class='reading'><%= _.template.formatreading(humidity) %>%</div>
         </div>
       </div>
       <div id='time'><%= _.template.formattime(date) %></div>
@@ -26,8 +26,8 @@
       <div id='reading'>
 
       </div>
-      <div id='temp-graph'></div>
-      <div id='humidity-graph'></div>
+      <div id='temperature' class='chart'></div>
+      <div id='humidity' class='chart'></div>
     </div>
   </body>
 

@@ -7,18 +7,15 @@ var timeString = d3.time.format("%-I:%M %p");
 
 var transformData = function(d) {
     d.date = formatDate.parse(d.date);
-    d.temperature = Math.round( +d.temperature *  10 ) / 10;
-    d.humidity = Math.round( +d.humidity * 10 ) / 10;
+    d.temperature = +d.temperature;
+    d.humidity = +d.humidity;
     return d;
 };
 
-var drawTemp = function(data) {
-
+var drawChart = function(data, chartType) {
   var margin = {top: 20, right: 20, bottom: 30, left: 50},
       width = 720 - margin.left - margin.right,
       height = 300 - margin.top - margin.bottom;
-
-
 
   var x = d3.time.scale()
       .range([0, width]);
@@ -37,98 +34,34 @@ var drawTemp = function(data) {
 
   var line = d3.svg.line()
       .x(function(d) { return x(d.date); })
-      .y(function(d) { return y(d.temperature); });
+      .y(function(d) { return y(d[chartType]); });
 
-  var svg = d3.select("#temp-graph").append("svg")
+  var svg = d3.select(".chart#" + chartType).append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
     .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+  x.domain(d3.extent(data, function(d) { return d.date; }));
+  y.domain([0, d3.max(data, function(d) { return d[chartType]; })]);
 
-    x.domain(d3.extent(data, function(d) { return d.date; }));
-    y.domain([0, d3.max(data, function(d) { return d.temperature; })]);
+  svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis);
 
-    svg.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
-        .call(xAxis);
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis);
 
-    svg.append("g")
-        .attr("class", "y axis")
-        .call(yAxis)
-      .append("text")
-        .attr("transform", "rotate(-90)")
-        .attr("y", 6)
-        .attr("dy", ".71em")
-        .style("text-anchor", "end")
-        .text("Temperature (F)");
-
-    svg.append("path")
-        .datum(data)
-        .attr("class", "line")
-        .attr("d", line);
+  svg.append("path")
+      .datum(data)
+      .attr("class", "line")
+      .attr("d", line);
 
 };
 
-var drawHumidity = function(data) {
 
-  var margin = {top: 20, right: 20, bottom: 30, left: 50},
-      width = 720 - margin.left - margin.right,
-      height = 300 - margin.top - margin.bottom;
-
-
-
-  var x = d3.time.scale()
-      .range([0, width]);
-
-  var y = d3.scale.linear()
-      .range([height, 0]);
-
-  var xAxis = d3.svg.axis()
-      .scale(x)
-      .orient("bottom")
-      .tickFormat(d3.time.format("%-I%p"));
-
-  var yAxis = d3.svg.axis()
-      .scale(y)
-      .orient("left");
-
-  var line = d3.svg.line()
-      .x(function(d) { return x(d.date); })
-      .y(function(d) { return y(d.humidity); });
-
-  var svg = d3.select("#humidity-graph").append("svg")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-
-    x.domain(d3.extent(data, function(d) { return d.date; }));
-    y.domain([0, d3.max(data, function(d) { return d.humidity; })]);
-
-    svg.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
-        .call(xAxis);
-
-    svg.append("g")
-        .attr("class", "y axis")
-        .call(yAxis)
-      .append("text")
-        .attr("transform", "rotate(-90)")
-        .attr("y", 6)
-        .attr("dy", ".71em")
-        .style("text-anchor", "end")
-        .text("Humidity (%)");
-
-    svg.append("path")
-        .datum(data)
-        .attr("class", "line")
-        .attr("d", line);
-
-};
 
 $(function(){
   var sortDate = function(a, b) {
@@ -144,6 +77,10 @@ $(function(){
     return timeString(stamp);
   }
 
+  _.template.formatreading = function(reading) {
+    return Math.round(reading * 10) / 10;
+  }
+
   var data;
   var readingTemp = _.template(
     $("#readingTemplate").html()
@@ -152,24 +89,11 @@ $(function(){
   d3.csv('./data/readings.csv', transformData, function(error, data){
     if (error) throw error;
 
-
-    // console.log(data[data.length]);
     var lastReading = readingTemp(data[data.length - 1]);
     $("#reading").html(lastReading);
 
-    drawTemp(data);
-    drawHumidity(data);
+    drawChart(data, 'temperature');
+    drawChart(data, 'humidity');
   });
 
-  // d3.csv('./data/readings.csv', function(d){
-  //   return {
-  //     timestamp : new Date(d.date),
-  //     temperature : +d.temperature,
-  //     humidity : +d.humidity,
-  //   };
-  // }, function(error, rows){
-  //   return rows;
-  // });
-
-console.log(data);
 });
