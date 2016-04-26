@@ -40,8 +40,8 @@ def archive_and_create():
 
     data = get_data()
     archive_file(data)
-    os.remove(SETTINGS['data-file'])
+    os.remove(SETTINGS['data_file'])
     template = SETTINGS['data_file'].replace('csv', 'template')
     with open(SETTINGS['data_file'], 'wb') as output:
         with open(template, 'rb') as fieldnames:
-            output.write(fieldnames)
+            output.write(fieldnames.read())
